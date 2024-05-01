@@ -11,6 +11,7 @@ import Message from "./Message";
 import { LuFolderEdit } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Loader from "../../../utils/Loader";
 
 const ChatApp = () => {
   const navigate = useNavigate();
@@ -18,8 +19,9 @@ const ChatApp = () => {
   const [messages, setMessages] = useState([]);
   const [messages, setHistory] = useState([]);
 
-  const { historyMessages } = useSelector((state) => ({
+  const { historyMessages, historyLoader } = useSelector((state) => ({
     historyMessages: state.historyReducer.data,
+    historyLoader: state.historyReducer.loading,
   }));
 
   const {
@@ -72,9 +74,15 @@ const ChatApp = () => {
                 </span>
               }
             >
-              {historyMessages.map((message, i) => {
-                return <Menu.Item key="1">Why do I have a bald Head</Menu.Item>;
-              })}
+              {historyLoader ? (
+                <Loader />
+              ) : (
+                historyMessages.map((message, i) => {
+                  return (
+                    <Menu.Item key="1">Why do I have a bald Head</Menu.Item>
+                  );
+                })
+              )}
             </Menu.ItemGroup>
           </Menu>
         </Sider>

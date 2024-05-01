@@ -12,7 +12,7 @@ export const history = (data, hooks) => {
   request
     .post(HISTORY, data)
     .then((resp) => {
-      dispatch({ type: HISTORY_SUCCESS, payload: resp });
+      dispatch({ type: HISTORY_SUCCESS, payload: resp?.data?.history || [] });
       notification.success({ message: resp?.data?.message });
       navigate("/");
     })
