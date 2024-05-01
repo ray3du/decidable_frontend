@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -10,11 +10,18 @@ import "./chatapp.css";
 import Message from "./Message";
 import { LuFolderEdit } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ChatApp = () => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const [messages, setMessages] = useState([]);
+  const [messages, setHistory] = useState([]);
+
+  const { historyMessages } = useSelector((state) => ({
+    historyMessages: state.historyReducer.data,
+  }));
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -65,10 +72,9 @@ const ChatApp = () => {
                 </span>
               }
             >
-              <Menu.Item key="1">Why do I have a bald Head</Menu.Item>
-              <Menu.Item key="2">How do I get good in coding</Menu.Item>
-              <Menu.Item key="3">Pregnancy signs!</Menu.Item>
-              <Menu.Item key="4">How to get rich!</Menu.Item>
+              {historyMessages.map((message, i) => {
+                return <Menu.Item key="1">Why do I have a bald Head</Menu.Item>;
+              })}
             </Menu.ItemGroup>
           </Menu>
         </Sider>
