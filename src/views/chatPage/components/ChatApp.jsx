@@ -19,7 +19,7 @@ const ChatApp = () => {
   return (
     <div className="chatapp">
       <Layout style={{ height: "100vh" }}>
-        <Sider trigger={null} collapsible collapsed={collapsed}>
+        <Sider trigger={null} collapsible collapsed={collapsed} width={300}>
           <div className="demo-logo-vertical" />
           <Menu
             theme="dark"
