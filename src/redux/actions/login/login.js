@@ -1,0 +1,22 @@
+import { LOGIN_ERROR, LOGIN_LOADING, LOGIN_SUCCESS } from "../../types";
+import request from "../../../helpers/request";
+import { LOGIN } from "../../../helpers/api";
+import { notification } from "antd";
+
+export const login = (data, hooks) => {
+  const { dispatch, navigate } = hooks;
+  dispatch({
+    type: LOGIN_LOADING,
+  });
+
+  request
+    .post(LOGIN, data)
+    .then((resp) => {
+      dispatch({ type: LOGIN_SUCCESS, payload: resp });
+      notification.success({ message: resp?.data?.message });
+      navigate("/");
+    })
+    .catch((err) => {
+      dispatch({ type: LOGIN_ERROR, payload: err });
+    });
+};

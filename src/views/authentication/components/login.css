@@ -1,0 +1,22 @@
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.cardWidth {
+  width: 400px !important;
+}
+
+@media screen and (max-width: 768px) {
+  .login {
+    padding: 0 20px; /* Adjust padding for smaller screens */
+  }
+
+  .login .ant-card {
+    width: 100%; /* Set card width to 100% on smaller screens */
+    max-width: 400px; /* Optionally set max-width for better readability */
+  }
+}
