@@ -4,11 +4,20 @@ import {
   MenuUnfoldOutlined,
   SendOutlined,
 } from "@ant-design/icons";
-import { Button, Input, Layout, Menu, message, Popconfirm, theme } from "antd";
+import {
+  Button,
+  Input,
+  Layout,
+  Menu,
+  Popconfirm,
+  Typography,
+  theme,
+  message,
+} from "antd";
 const { Header, Sider, Content } = Layout;
 import "./chatapp.css";
 import Message from "./Message";
-import { LuFolderEdit } from "react-icons/lu";
+import { LuFolderEdit, LuLogOut } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Loader from "../../../utils/Loader";
@@ -70,17 +79,37 @@ const ChatApp = () => {
             <Menu.ItemGroup
               key="sub"
               title={
-                <span style={{ display: "flex", alignItems: "center" }}>
-                  <LuFolderEdit
-                    style={{ marginRight: "8px", color: "gold", fontSize: 22 }}
-                  />
+                <span
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    textAlign: "center",
+                    width: "100%",
+                    marginTop: 12,
+                    marginBottom: 8,
+                  }}
+                >
                   <span
                     style={{
                       fontSize: "15px",
                       fontFamily: "Arial",
                       fontWeight: "bold",
+                      textAlign: "center",
+                      width: "100%",
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "0.4em",
                     }}
                   >
+                    <LuFolderEdit
+                      style={{
+                        marginRight: "8px",
+                        color: "gold",
+                        fontSize: 22,
+                      }}
+                    />
                     <i>{collapsed ? "DH" : "Decidable History"}</i>
                   </span>
                 </span>
@@ -104,6 +133,7 @@ const ChatApp = () => {
               display: "flex",
               textAlign: "center",
               justifyContent: "space-between",
+              alignItems: "center",
             }}
           >
             <Button
@@ -116,8 +146,7 @@ const ChatApp = () => {
                 height: 64,
               }}
             />
-            <h4 style={{ marginTop: "-1px", color: "green", paddingRight: 10 }}>
-              <i style={{ marginRight: "16px" }}>Decidable AI</i>
+            <div>
               <Popconfirm
                 title="Wanna Logout?"
                 placement="leftBottom"
@@ -125,16 +154,23 @@ const ChatApp = () => {
                 okText="Yes"
                 cancelText="No"
               >
-                <Button
-                  size="small"
-                  type="primary"
-                  danger
-                  style={{ borderRadius: "5px 5px 5px 5px" }}
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "0.6em",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginRight: 12,
+                    fontWeight: "bold",
+                    cursor: "pointer",
+                  }}
                 >
-                  Logout
-                </Button>
+                  <Typography.Text>Logout</Typography.Text>
+                  <LuLogOut color="black" />
+                </div>
               </Popconfirm>
-            </h4>
+            </div>
           </Header>
           <Content
             style={{
@@ -174,7 +210,13 @@ const ChatApp = () => {
               onChange={(e) => handleChange(e)}
             />
             <SendOutlined
-              style={{ fontSize: 20, color: "#1890ff" }}
+              style={{
+                fontSize: 20,
+                color: "#1890ff",
+                flex: "1",
+                marginRight: "16px",
+                height: "54px",
+              }}
               onClick={() => handleSubmit()}
             />
           </div>

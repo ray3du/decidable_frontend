@@ -17,6 +17,7 @@ instance.interceptors.request.use(
     }
     config.headers["Content-Type"] = "application/json";
     // config.headers["Access-Control-Allow-Origin"] = "*";
+    // config.headers["Access-Control-Allow-Credentials"] = true;
     return config;
   },
   (error) => {
