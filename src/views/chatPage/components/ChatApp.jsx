@@ -77,9 +77,7 @@ const ChatApp = () => {
                 <Loader />
               ) : (
                 historyMessages.map((message, i) => {
-                  return (
-                    <Menu.Item key="1">Why do I have a bald Head</Menu.Item>
-                  );
+                  return <Menu.Item key={i}>{message?.title}</Menu.Item>;
                 })
               )}
             </Menu.ItemGroup>
