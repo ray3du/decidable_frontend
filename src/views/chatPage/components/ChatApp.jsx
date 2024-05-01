@@ -17,7 +17,6 @@ const ChatApp = () => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const [messages, setMessages] = useState([]);
-  const [messages, setHistory] = useState([]);
 
   const { historyMessages, historyLoader } = useSelector((state) => ({
     historyMessages: state.historyReducer.data,
