@@ -4,7 +4,7 @@ import {
   MenuUnfoldOutlined,
   SendOutlined,
 } from "@ant-design/icons";
-import { Button, Input, Layout, Menu, Popconfirm, theme } from "antd";
+import { Button, Input, Layout, Menu, message, Popconfirm, theme } from "antd";
 const { Header, Sider, Content } = Layout;
 import "./chatapp.css";
 import Message from "./Message";
@@ -14,12 +14,14 @@ import { useSelector } from "react-redux";
 import Loader from "../../../utils/Loader";
 import { history } from "../../../redux/actions/history/history";
 import { useDispatchHook } from "../../../utils/Customhooks";
+import { debounce } from "lodash";
 
 const ChatApp = () => {
   const navigate = useNavigate();
   const { ...hooks } = useDispatchHook();
   const [collapsed, setCollapsed] = useState(false);
   const [messages, setMessages] = useState([]);
+  const [messageValue, setMessage] = useState(null);
 
   const { historyMessages, historyLoader } = useSelector((state) => ({
     historyMessages: state.historyReducer.data,
@@ -34,8 +36,19 @@ const ChatApp = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
-  useEffect(() => {
-    const ws = new WebSocket("ws://localhost:8000/ws/prompt/test/");
+  const handleChange = debounce((value) => {
+    setMessage(value);
+  }, 500);
+
+  const handleLogout = () => {
+    localStorage.removeItem("decidable_token");
+    navigate("/login");
+  };
+
+  const handleSubmit = () => {
+    if (!messageValue)
+      return message.warning("Please input message to submit!");
+    const ws = new WebSocket("ws://localhost:8000/ws/prompt/test");
     ws.onopen = (event) => {
       ws.send();
     };
@@ -47,13 +60,6 @@ const ChatApp = () => {
         console.log(err);
       }
     };
-    //clean up function
-    return () => ws.close();
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("decidable_token");
-    navigate("/login");
   };
   return (
     <div className="chatapp">
@@ -165,8 +171,12 @@ const ChatApp = () => {
             <Input
               placeholder="Type a message"
               style={{ flex: "1", marginRight: "16px" }}
+              onChange={(e) => handleChange(e)}
             />
-            <SendOutlined style={{ fontSize: 20, color: "#1890ff" }} />
+            <SendOutlined
+              style={{ fontSize: 20, color: "#1890ff" }}
+              onClick={() => handleSubmit()}
+            />
           </div>
         </Layout>
       </Layout>
