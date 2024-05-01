@@ -3,10 +3,15 @@ import "./login.css";
 import { Link } from "react-router-dom";
 import { useDispatchHook } from "../../../utils/Customhooks";
 import { login } from "../../../redux/actions/login/login";
+import { useSelector } from "react-redux";
 
 const Login = () => {
   const { ...hooks } = useDispatchHook();
-  // const navigate = useNavigate();
+  const { loading } = useSelector((state) => ({
+    loading: state.loginReducer.loading,
+  }));
+
+  console.log("Loaidng \t", loading);
   const handleSubmit = (values) => {
     login(values, hooks);
   };
@@ -16,7 +21,7 @@ const Login = () => {
       <Card size="small" type="inner" className="cardWidth" style={cardStyle}>
         <h1 style={{ textAlign: "center" }}>Login</h1>
         <p style={{ textAlign: "center" }}>
-          Welcome to Decidable. Login to proceed!
+          Welcome to <i>Decidable.</i> Login to proceed!
         </p>
         <Form onFinish={handleSubmit} layout="vertical">
           <Form.Item
@@ -50,10 +55,17 @@ const Login = () => {
             style={{ width: "100%", marginTop: "10px" }}
             type="primary"
             htmlType="submit"
+            loading={loading}
           >
             Login
           </Button>
-          <Row style={{ justifyContent: "center", marginTop: "10px" }}>
+          <Row
+            style={{
+              justifyContent: "center",
+              paddingTop: "20px",
+              paddingBottom: "20px",
+            }}
+          >
             <Link style={{ color: "blue" }} to="/register">
               Dont have an account? Please Register
             </Link>

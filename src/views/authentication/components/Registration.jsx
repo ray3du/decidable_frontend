@@ -3,9 +3,13 @@ import "./login.css";
 import { Link } from "react-router-dom";
 import { useDispatchHook } from "../../../utils/Customhooks";
 import { register } from "../../../redux/actions/registration/register";
+import { useSelector } from "react-redux";
 
 const Registration = () => {
   const { ...hooks } = useDispatchHook();
+  const { loading } = useSelector((state) => ({
+    loading: state.registrationReducer.loading,
+  }));
   const handleSubmit = (values) => {
     if (values?.password !== values?.confirm_password)
       return message.warning("Passwords do not match!");
@@ -50,10 +54,17 @@ const Registration = () => {
             style={{ width: "100%", marginTop: "10px" }}
             type="primary"
             htmlType="submit"
+            loading={loading}
           >
             Register
           </Button>
-          <Row style={{ justifyContent: "center", marginTop: "10px" }}>
+          <Row
+            style={{
+              justifyContent: "center",
+              paddingTop: "20px",
+              paddingBottom: "20px",
+            }}
+          >
             <Link style={{ color: "darkblue" }} to="/login">
               Already have an account? Please Login
             </Link>

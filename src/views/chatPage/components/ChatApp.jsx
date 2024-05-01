@@ -1,49 +1,76 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
   SendOutlined,
 } from "@ant-design/icons";
-import { Button, Input, Layout, Menu, theme } from "antd";
-const { Header, Sider, Content, Footer } = Layout;
+import { Button, Input, Layout, Menu, Popconfirm, theme } from "antd";
+const { Header, Sider, Content } = Layout;
 import "./chatapp.css";
+import Message from "./Message";
+import { LuFolderEdit } from "react-icons/lu";
+import { useNavigate } from "react-router-dom";
 
 const ChatApp = () => {
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
+  const [messages, setMessages] = useState([]);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
+  useEffect(() => {
+    const ws = new WebSocket("ws://localhost:8000/ws/prompt/test/");
+    ws.onopen = (event) => {
+      ws.send();
+    };
+    ws.onmessage = function (event) {
+      console.log(event);
+      try {
+        setMessages([]);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    //clean up function
+    return () => ws.close();
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("decidable_token");
+    navigate("/login");
+  };
   return (
     <div className="chatapp">
       <Layout style={{ height: "100vh" }}>
         <Sider trigger={null} collapsible collapsed={collapsed} width={300}>
           <div className="demo-logo-vertical" />
-          <Menu
-            theme="dark"
-            mode="inline"
-            defaultSelectedKeys={["1"]}
-            items={[
-              {
-                key: "1",
-                label: "Why do I have a bald Head",
-              },
-              {
-                key: "2",
-                label: "How do I get good in coding",
-              },
-              {
-                key: "3",
-                label: "Pregnancy signs!",
-              },
-              {
-                key: "4",
-                label: "How to get rich!",
-              },
-            ]}
-          />
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
+            <Menu.ItemGroup
+              key="sub"
+              title={
+                <span style={{ display: "flex", alignItems: "center" }}>
+                  <LuFolderEdit
+                    style={{ marginRight: "8px", color: "gold", fontSize: 22 }}
+                  />
+                  <span
+                    style={{
+                      fontSize: "15px",
+                      fontFamily: "Arial",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    <i>{collapsed ? "DH" : "Decidable History"}</i>
+                  </span>
+                </span>
+              }
+            >
+              <Menu.Item key="1">Why do I have a bald Head</Menu.Item>
+              <Menu.Item key="2">How do I get good in coding</Menu.Item>
+              <Menu.Item key="3">Pregnancy signs!</Menu.Item>
+              <Menu.Item key="4">How to get rich!</Menu.Item>
+            </Menu.ItemGroup>
+          </Menu>
         </Sider>
         <Layout>
           <Header
@@ -65,8 +92,24 @@ const ChatApp = () => {
                 height: 64,
               }}
             />
-            <h4 style={{ marginTop: "-1px", color: "green" }}>
-              <i>Decidable AI</i>
+            <h4 style={{ marginTop: "-1px", color: "green", paddingRight: 10 }}>
+              <i style={{ marginRight: "16px" }}>Decidable AI</i>
+              <Popconfirm
+                title="Wanna Logout?"
+                placement="leftBottom"
+                onConfirm={handleLogout}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button
+                  size="small"
+                  type="primary"
+                  danger
+                  style={{ borderRadius: "5px 5px 5px 5px" }}
+                >
+                  Logout
+                </Button>
+              </Popconfirm>
             </h4>
           </Header>
           <Content
@@ -74,7 +117,7 @@ const ChatApp = () => {
               position: "relative",
               overflowY: "auto",
               flex: "1",
-              background: colorBgContainer,
+              // background: colorBgContainer,
               borderRadius: borderRadiusLG,
               // Hide scroll bars but allow scrolling
               WebkitOverflowScrolling: "touch", // Enable smooth scrolling on iOS devices
@@ -82,14 +125,15 @@ const ChatApp = () => {
               MsOverflowStyle: "none", // IE and Edge
               marginLeft: 50,
               marginRight: 50,
-              border: "2px solid whitesmoke",
-              padding: 10,
+              paddingTop: 10,
+              paddingLeft: 40,
+              paddingRight: 40,
             }}
           >
-            {/* Sample content to fill the area */}
-            {[...Array(20)].map((_, index) => (
-              <p key={index}>Content line {index + 1}</p>
-            ))}
+            <div style={{ display: "flex", flexDirection: "column-reverse" }}>
+              <Message alignment="left" />
+              <Message alignment="right" />
+            </div>
           </Content>
           <div
             style={{
