@@ -12,9 +12,12 @@ import { LuFolderEdit } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Loader from "../../../utils/Loader";
+import { history } from "../../../redux/actions/history/history";
+import { useDispatchHook } from "../../../utils/Customhooks";
 
 const ChatApp = () => {
   const navigate = useNavigate();
+  const { ...hooks } = useDispatchHook();
   const [collapsed, setCollapsed] = useState(false);
   const [messages, setMessages] = useState([]);
 
@@ -22,6 +25,10 @@ const ChatApp = () => {
     historyMessages: state.historyReducer.data,
     historyLoader: state.historyReducer.loading,
   }));
+
+  useEffect(() => {
+    history(hooks);
+  }, []);
 
   const {
     token: { colorBgContainer, borderRadiusLG },

@@ -3,14 +3,14 @@ import request from "../../../helpers/request";
 import { HISTORY } from "../../../helpers/api";
 import { notification } from "antd";
 
-export const history = (data, hooks) => {
+export const history = (hooks) => {
   const { dispatch, navigate } = hooks;
   dispatch({
     type: HISTORY_LOADING,
   });
 
   request
-    .post(HISTORY, data)
+    .get(HISTORY)
     .then((resp) => {
       dispatch({ type: HISTORY_SUCCESS, payload: resp?.data?.history || [] });
       notification.success({ message: resp?.data?.message });
