@@ -57,7 +57,7 @@ const ChatApp = () => {
             <Menu.ItemGroup
               key="sub"
               title={
-                <span style={{ display: "flex", alignItems: "center" }}>
+                <span style={{ display: "flex", alignItems: "center", textAlign: 'center', width: '100%', marginTop: 8 }}>
                   <LuFolderEdit
                     style={{ marginRight: "8px", color: "gold", fontSize: 22 }}
                   />
