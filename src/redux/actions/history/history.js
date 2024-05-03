@@ -1,7 +1,6 @@
 import { HISTORY_ERROR, HISTORY_SUCCESS, HISTORY_LOADING } from "../../types";
 import request from "../../../helpers/request";
 import { HISTORY } from "../../../helpers/api";
-import { notification } from "antd";
 
 export const history = (hooks) => {
   const { dispatch, navigate } = hooks;
