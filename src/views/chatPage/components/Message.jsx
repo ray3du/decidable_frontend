@@ -1,6 +1,6 @@
 import { FiMessageSquare } from "react-icons/fi";
 
-const Message = ({ data, alignment }) => {
+const Message = ({ data }) => {
   if (data?.length === 0)
     return (
       <div

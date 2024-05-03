@@ -56,7 +56,7 @@ const ChatApp = () => {
       );
     }
     if (ws) {
-      ws.onopen = (event) => {
+      ws.onopen = () => {
         console.log("Connected");
       };
       ws.onmessage = function (event) {
@@ -272,7 +272,7 @@ const ChatApp = () => {
           >
             <div style={{ display: "flex", flexDirection: "column" }}>
               {messages?.length === 0 ? (
-                <Message key={"new"} data={[]} alignment={"left"} />
+                <Message key={"new"} data={[]} />
               ) : (
                 messages &&
                 messages.map((data, i) => (
