@@ -1,4 +1,5 @@
 import { FiMessageSquare } from "react-icons/fi";
+import { FaArtstation, FaUserPlus } from "react-icons/fa";
 
 const Message = ({ data }) => {
   if (data?.length === 0)
@@ -28,14 +29,24 @@ const Message = ({ data }) => {
   return (
     <>
       <div
+        style={{ display: "flex", flexDirection: "row", gap: 10, margin: 6 }}
+      >
+        <div>
+          <FaUserPlus color="green" fontSize={18} />
+        </div>
+        <div>
+          <b>You</b>
+        </div>
+      </div>
+      <div
         style={{
           width: "100%",
-          backgroundColor: "#92c070", // Different background colors for right and left messages
-          borderRadius: "24px 0px 24px 10px",
+          backgroundColor: "lightgray", // Different background colors for right and left messages
+          borderRadius: "0px 0px 0px 0px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center",
+          alignItems: "start",
           marginBottom: "10px", // Add some margin between messages
         }}
       >
@@ -46,32 +57,52 @@ const Message = ({ data }) => {
             wordWrap: "break-word", // Wrap long messages
           }}
         >
-          <p style={paragraphStyle}>{data?.user_response}</p>
+          <p style={{ fontWeight: "bold", ...paragraphStyle }}>
+            {data?.user_response}
+          </p>
         </div>
       </div>
       {data?.ai_response && (
-        <div
-          style={{
-            backgroundColor: "#69a5cc", // Different background colors for right and left messages
-            borderRadius: "0px 10px 24px 24px", // Curved borders based on alignment
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: "10px", // Add some margin between messages
-          }}
-        >
+        <>
+          {" "}
           <div
             style={{
-              padding: "10px",
-              maxWidth: "100%", // Limit message width to 70% of the container
-              wordWrap: "break-word", // Wrap long messages
+              display: "flex",
+              flexDirection: "row",
+              gap: 10,
+              margin: 6,
             }}
           >
-            <p style={paragraphStyle}>{data?.ai_response}</p>
+            <div>
+              <FaArtstation color="blue" fontSize={18} />
+            </div>
+            <div>
+              <b>Decidable AI</b>
+            </div>
           </div>
-        </div>
+          <div
+            style={{
+              backgroundColor: "#e2e0e0", // Different background colors for right and left messages
+              borderRadius: "0px 0px 0px 0px", // Curved borders based on alignment
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "start",
+              marginBottom: "10px", // Add some margin between messages
+            }}
+          >
+            <div
+              style={{
+                padding: "10px",
+                maxWidth: "100%", // Limit message width to 70% of the container
+                wordWrap: "break-word", // Wrap long messages
+              }}
+            >
+              <p style={paragraphStyle}>{data?.ai_response}</p>
+            </div>
+          </div>
+        </>
       )}
     </>
   );
