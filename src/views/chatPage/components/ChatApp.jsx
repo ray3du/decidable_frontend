@@ -64,6 +64,8 @@ const ChatApp = () => {
         try {
           setMessages((prevState) => [...prevState, data?.message]);
           setLoading(false);
+          setMessage("");
+          history(hooks);
         } catch (err) {
           console.log(err);
           setLoading(false);
@@ -287,6 +289,7 @@ const ChatApp = () => {
           </Content>
           <div style={cardStyle}>
             <Input
+              disabled={loading}
               placeholder="Type a message"
               style={{
                 flex: "1",

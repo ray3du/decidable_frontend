@@ -13,7 +13,7 @@ export const history = (hooks) => {
     .get(HISTORY)
     .then((resp) => {
       dispatch({ type: HISTORY_SUCCESS, payload: resp?.data?.history || [] });
-      notification.success({ message: resp?.data?.message });
+      // notification.success({ message: resp?.data?.message });
       navigate("/");
     })
     .catch((err) => {
