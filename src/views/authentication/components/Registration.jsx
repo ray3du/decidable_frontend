@@ -23,7 +23,16 @@ const Registration = () => {
           Put in the below details to register
         </p>
         <Form onFinish={handleSubmit} layout="vertical">
-          <Form.Item label="Email" name="email">
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please input your email!",
+              },
+            ]}
+          >
             <Input type="email" />
           </Form.Item>
           <Form.Item
