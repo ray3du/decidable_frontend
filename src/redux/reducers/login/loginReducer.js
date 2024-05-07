@@ -17,7 +17,7 @@ export const loginReducer = (state = initialState, action) => {
       };
     case LOGIN_SUCCESS:
       localStorage.setItem("decidable_token", action?.payload?.data?.token);
-      localStorage.setItem("user_name", action?.payload?.data?.user?.email);
+      localStorage.setItem("user_email", action?.payload?.data?.user?.email);
 
       return {
         ...state,

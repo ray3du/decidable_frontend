@@ -58,16 +58,13 @@ const ChatApp = () => {
       };
       ws.onmessage = function (event) {
         let data = JSON.parse(event.data);
-        let username = localStorage.getItem("user_name");
+        let username = localStorage.getItem("user_email");
         try {
-          if (data?.user?.email === username) {
+          if (data?.user?.email == username) {
             setMessages((prevState) => [data?.message, ...prevState]);
             setLoading(false);
             setMessage("");
             history(hooks);
-          } else {
-            setLoading(false);
-            setMessage("");
           }
         } catch (err) {
           console.log(err);
@@ -116,7 +113,7 @@ const ChatApp = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("decidable_token");
-    localStorage.removeItem("user_name");
+    localStorage.removeItem("user_email");
     navigate("/login");
   };
 
