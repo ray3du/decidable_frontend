@@ -58,11 +58,17 @@ const ChatApp = () => {
       };
       ws.onmessage = function (event) {
         let data = JSON.parse(event.data);
+        let username = localStorage.getItem("user_name");
         try {
-          setMessages((prevState) => [data?.message, ...prevState]);
-          setLoading(false);
-          setMessage("");
-          history(hooks);
+          if (data?.user?.email === username) {
+            setMessages((prevState) => [data?.message, ...prevState]);
+            setLoading(false);
+            setMessage("");
+            history(hooks);
+          } else {
+            setLoading(false);
+            setMessage("");
+          }
         } catch (err) {
           console.log(err);
           setLoading(false);
@@ -103,7 +109,6 @@ const ChatApp = () => {
    * @param {Event} e
    */
   const handleKeyEvent = (e) => {
-    console.log("e: ", e.key);
     if (e.key == "Enter") {
       handleSubmit();
     }

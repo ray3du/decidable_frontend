@@ -11,7 +11,6 @@ const Login = () => {
     loading: state.loginReducer.loading,
   }));
 
-  console.log("Loaidng \t", loading);
   const handleSubmit = (values) => {
     login(values, hooks);
   };

@@ -10,11 +10,13 @@ const Registration = () => {
   const { loading } = useSelector((state) => ({
     loading: state.registrationReducer.loading,
   }));
+
   const handleSubmit = (values) => {
     if (values?.password !== values?.confirm_password)
       return message.warning("Passwords do not match!");
     register(values, hooks);
   };
+
   return (
     <div className="login">
       <Card size="small" type="inner" style={cardStyle} className="cardWidth">

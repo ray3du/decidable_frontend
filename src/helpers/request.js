@@ -51,7 +51,7 @@ instance.interceptors.response.use(
           ) {
             message.error("Access is denied");
             localStorage.removeItem("access_token");
-            // navigate('/login');
+            localStorage.removeItem("user_name");
           } else {
             message.error(
               errorObject.data?.error_description ||
@@ -59,13 +59,13 @@ instance.interceptors.response.use(
                 errorObject?.data?.message
             );
             localStorage.removeItem("access_token");
-            // navigate('/login');
+            localStorage.removeItem("user_name");
           }
           break;
         case 403:
           message.error("Unauthorized Access");
           localStorage.removeItem("access_token");
-          // navigate('/login');
+          localStorage.removeItem("user_name");
           break;
         case 409:
           // Error Notification
