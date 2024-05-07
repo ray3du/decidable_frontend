@@ -15,8 +15,6 @@ import {
   message,
   Spin,
 } from "antd";
-const { Header, Sider, Content } = Layout;
-import "./chatapp.css";
 import Message from "./Message";
 import { LuFolderEdit, LuLogOut } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +23,8 @@ import { history } from "../../../redux/actions/history/history";
 import { useDispatchHook } from "../../../utils/Customhooks";
 import { FaPenAlt } from "react-icons/fa";
 import { WS_URL } from "../../../helpers/api";
+import "./chatapp.css";
+const { Header, Sider, Content } = Layout;
 
 const ChatApp = () => {
   const navigate = useNavigate();
@@ -203,7 +203,13 @@ const ChatApp = () => {
                 </Menu.Item>
               </div>
               {historyLoader ? (
-                <Spin style={{ display: "flex", justifyContent: "center" }} />
+                <Spin
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: "30px",
+                  }}
+                />
               ) : (
                 reversedArray.map((message, i) => {
                   return (
