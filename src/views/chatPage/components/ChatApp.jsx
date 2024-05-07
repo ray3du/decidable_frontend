@@ -116,6 +116,7 @@ const ChatApp = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("decidable_token");
+    localStorage.removeItem("user_name");
     navigate("/login");
   };
 
