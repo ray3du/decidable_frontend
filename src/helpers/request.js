@@ -3,7 +3,7 @@ import axios from "axios";
 
 const instance = axios.create({
   mode: "cors",
-  baseURL: "https://5e76-41-90-67-30.ngrok-free.app",
+  baseURL: "https://d666-41-90-70-202.ngrok-free.app",
 });
 
 // Add a request interceptor
