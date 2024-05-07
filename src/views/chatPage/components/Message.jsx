@@ -1,5 +1,6 @@
 import { FiMessageSquare } from "react-icons/fi";
 import { FaArtstation, FaUserPlus } from "react-icons/fa";
+import { Typography } from "antd";
 
 const Message = ({ data }) => {
   if (data?.length === 0)
@@ -27,9 +28,9 @@ const Message = ({ data }) => {
       </div>
     );
   return (
-    <>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
       <div
-        style={{ display: "flex", flexDirection: "row", gap: 10, margin: 6 }}
+        style={{ display: "flex", flexDirection: "row", gap: 10, margin: 6, paddingBottom: '16px' }}
       >
         <div>
           <FaUserPlus color="green" fontSize={18} />
@@ -63,7 +64,7 @@ const Message = ({ data }) => {
         </div>
       </div>
       {data?.ai_response && (
-        <>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
           {" "}
           <div
             style={{
@@ -99,12 +100,12 @@ const Message = ({ data }) => {
                 wordWrap: "break-word", // Wrap long messages
               }}
             >
-              <p style={paragraphStyle}>{data?.ai_response}</p>
+              <Typography.Text style={paragraphStyle}>{data?.ai_response}</Typography.Text>
             </div>
           </div>
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 

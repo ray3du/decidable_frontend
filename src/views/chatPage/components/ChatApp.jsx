@@ -24,6 +24,7 @@ import { useSelector } from "react-redux";
 import { history } from "../../../redux/actions/history/history";
 import { useDispatchHook } from "../../../utils/Customhooks";
 import { FaPenAlt } from "react-icons/fa";
+import { WS_URL } from "../../../helpers/api";
 
 const ChatApp = () => {
   const navigate = useNavigate();
@@ -49,11 +50,7 @@ const ChatApp = () => {
   useEffect(() => {
     let token = localStorage.getItem("decidable_token");
     if (ws == null) {
-      setWs(
-        new WebSocket(
-          `wss://d666-41-90-70-202.ngrok-free.app/ws/prompt/test/?token=${token}`
-        )
-      );
+      setWs(new WebSocket(`${WS_URL}/ws/prompt/test/?token=${token}`));
     }
     if (ws) {
       ws.onopen = () => {
@@ -62,7 +59,7 @@ const ChatApp = () => {
       ws.onmessage = function (event) {
         let data = JSON.parse(event.data);
         try {
-          setMessages((prevState) => [...prevState, data?.message]);
+          setMessages((prevState) => [data?.message, ...prevState]);
           setLoading(false);
           setMessage("");
           history(hooks);
@@ -93,8 +90,23 @@ const ChatApp = () => {
     }
   };
 
-  const handleChange = (value) => {
-    setMessage(value);
+  /**
+   *
+   * @param {Event} e
+   */
+  const handleChange = (e) => {
+    setMessage(e.target.value);
+  };
+
+  /**
+   *
+   * @param {Event} e
+   */
+  const handleKeyEvent = (e) => {
+    console.log("e: ", e.key);
+    if (e.key == "Enter") {
+      handleSubmit();
+    }
   };
 
   const handleLogout = () => {
@@ -272,7 +284,14 @@ const ChatApp = () => {
               paddingRight: 40,
             }}
           >
-            <div style={{ display: "flex", flexDirection: "column" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column-reverse",
+                maxHeight: "90vh",
+                overflowY: "scroll",
+              }}
+            >
               {messages?.length === 0 ? (
                 <Message key={"new"} data={[]} />
               ) : (
@@ -295,8 +314,10 @@ const ChatApp = () => {
                 flex: "1",
                 marginRight: "16px",
                 boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                padding: "8px 8px",
               }}
-              onChange={(e) => handleChange(e.target.value)}
+              onChange={(e) => handleChange(e)}
+              onKeyUp={(e) => handleKeyEvent(e)}
               value={messageValue}
             />
             {messageValue &&

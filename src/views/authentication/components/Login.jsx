@@ -21,7 +21,7 @@ const Login = () => {
       <Card size="small" type="inner" className="cardWidth" style={cardStyle}>
         <h1 style={{ textAlign: "center" }}>Login</h1>
         <p style={{ textAlign: "center" }}>
-          Welcome to <i>Decidable.</i> Login to proceed!
+          Welcome to <i>Decidable.</i>
         </p>
         <Form onFinish={handleSubmit} layout="vertical">
           <Form.Item
