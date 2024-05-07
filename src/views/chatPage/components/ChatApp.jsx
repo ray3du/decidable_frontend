@@ -51,7 +51,7 @@ const ChatApp = () => {
     if (ws == null) {
       setWs(
         new WebSocket(
-          `wss://5e76-41-90-67-30.ngrok-free.app/ws/prompt/test/?token=${token}`
+          `wss://d666-41-90-70-202.ngrok-free.app/ws/prompt/test/?token=${token}`
         )
       );
     }
