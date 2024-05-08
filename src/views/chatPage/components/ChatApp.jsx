@@ -24,6 +24,7 @@ import { useDispatchHook } from "../../../utils/Customhooks";
 import { FaPenAlt } from "react-icons/fa";
 import { WS_URL } from "../../../helpers/api";
 import "./chatapp.css";
+import { MdMessage } from "react-icons/md";
 const { Header, Sider, Content } = Layout;
 
 const ChatApp = () => {
@@ -317,8 +318,14 @@ const ChatApp = () => {
           </Content>
           <div style={cardStyle}>
             <Input
+              prefix={
+                <MdMessage
+                  fontSize={22}
+                  style={{ marginTop: "4px", color: "gray" }}
+                />
+              }
               disabled={loading}
-              placeholder="Type a message"
+              placeholder=" Ask Decidable"
               style={{
                 flex: "1",
                 marginRight: "16px",
